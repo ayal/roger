@@ -14,7 +14,13 @@ var masonryOptions = {
     percentPosition: true
 };
 
-var list = [];
+var list = ["http://nofilmschool.com/rss.xml",
+	    "https://www.cinema5d.com/feed/",
+	    "http://petapixel.com/topic/inspiration/feed/",
+	    "http://philipbloom.net/blog/feed/",
+	    "http://filmmakeriq.com/feed/",
+	    "http://www.comingsoon.net/feed",
+	   ];
 
 
 const App = React.createClass({
@@ -25,21 +31,26 @@ const App = React.createClass({
     componentWillMount: function() {
 	var that = this;
 	var toset = {};
+	console.log('list', list)
 	
 	_.each(list, function(u){
 	    $.getJSON('https://ajax.googleapis.com/ajax/services/feed/load?num=100&v=1.0&q=' + encodeURIComponent(u) + '&callback=?', function(x) {
 		var toset = {};
-		
-		_.each(_.filter(x.responseData.feed.entries, function(x){
+		var items = _.filter(x.responseData.feed.entries, function(x){
 		    var days = (new Date() - new Date(x.publishedDate)) / 1000 / 60 / 60 / 24;
-		    if (days <= 14) {
+		    if (days <= 5) {
 			return true;
 		    }
-		}), function(e){
+		}).sort((a,b)=>(new Date(b.publishedDate) - new Date(a.publishedDate)));
+		
+		console.log(items);
+		
+		_.each(items, function(e,i){
 		    if (e) {
-			toset[u] = <Square href={e.link} name={e.title} text={e.title} more={e}
+			console.log(u,i)
+			toset[u + '_' + i] = <Square href={e.link} name={e.title} text={e.title} more={e}
 			getimgsrc={(x) => { return $($('<div>' + x.content + '</div>').find('img')).attr('src') ||
-					    console.warn('no image', x)}} key={u} />
+					    console.warn('no image', x)}} key={u + '_' + i} />
 			    that.setState(toset);
 			
 		    }
@@ -109,16 +120,6 @@ const Square = React.createClass({
 		</a>
 		</div>
 	)
-        return (
-		<div className="square">
-		<a href={this.props.href} target="_blank">
-		<Pic src={src} />
-		<div className="text">
-		<h2>{this.props.name}</h2>
-		</div>
-		</a>
-		</div>
-        );
     }
 });
 
@@ -132,7 +133,7 @@ render((
         </Route>
         <Route path="/index.html" component={App}>
         </Route>
-	<Route path="/peachy/" component={App}>
+	<Route path="/roger/" component={App}>
         </Route>
 
     </Router>), document.getElementById('content'));

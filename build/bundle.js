@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8c2f01f5b120a4f0e939"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5d68c2a668930b60358a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -586,7 +586,7 @@
 					percentPosition: true
 	};
 
-	var list = [];
+	var list = ["http://nofilmschool.com/rss.xml", "https://www.cinema5d.com/feed/", "http://petapixel.com/topic/inspiration/feed/", "http://philipbloom.net/blog/feed/", "http://filmmakeriq.com/feed/", "http://www.comingsoon.net/feed"];
 
 	var App = _react2.default.createClass({
 					displayName: 'App',
@@ -598,22 +598,29 @@
 					componentWillMount: function componentWillMount() {
 									var that = this;
 									var toset = {};
+									console.log('list', list);
 
 									_.each(list, function (u) {
 													$.getJSON('https://ajax.googleapis.com/ajax/services/feed/load?num=100&v=1.0&q=' + encodeURIComponent(u) + '&callback=?', function (x) {
 																	var toset = {};
-
-																	_.each(_.filter(x.responseData.feed.entries, function (x) {
+																	var items = _.filter(x.responseData.feed.entries, function (x) {
 																					var days = (new Date() - new Date(x.publishedDate)) / 1000 / 60 / 60 / 24;
-																					if (days <= 14) {
+																					if (days <= 5) {
 																									return true;
 																					}
-																	}), function (e) {
+																	}).sort(function (a, b) {
+																					return new Date(b.publishedDate) - new Date(a.publishedDate);
+																	});
+
+																	console.log(items);
+
+																	_.each(items, function (e, i) {
 																					if (e) {
-																									toset[u] = _react2.default.createElement(Square, { href: e.link, name: e.title, text: e.title, more: e,
+																									console.log(u, i);
+																									toset[u + '_' + i] = _react2.default.createElement(Square, { href: e.link, name: e.title, text: e.title, more: e,
 																													getimgsrc: function getimgsrc(x) {
 																																	return $($('<div>' + x.content + '</div>').find('img')).attr('src') || console.warn('no image', x);
-																													}, key: u });
+																													}, key: u + '_' + i });
 																									that.setState(toset);
 																					}
 																	});
@@ -689,24 +696,6 @@
 																	)
 													)
 									);
-									return _react2.default.createElement(
-													'div',
-													{ className: 'square' },
-													_react2.default.createElement(
-																	'a',
-																	{ href: this.props.href, target: '_blank' },
-																	_react2.default.createElement(Pic, { src: src }),
-																	_react2.default.createElement(
-																					'div',
-																					{ className: 'text' },
-																					_react2.default.createElement(
-																									'h2',
-																									null,
-																									this.props.name
-																					)
-																	)
-													)
-									);
 					}
 	});
 
@@ -715,7 +704,7 @@
 					{ history: (0, _createBrowserHistory2.default)() },
 					_react2.default.createElement(_reactRouter.Route, { path: '/', component: App }),
 					_react2.default.createElement(_reactRouter.Route, { path: '/index.html', component: App }),
-					_react2.default.createElement(_reactRouter.Route, { path: '/peachy/', component: App })
+					_react2.default.createElement(_reactRouter.Route, { path: '/roger/', component: App })
 	), document.getElementById('content'));
 
 /***/ },
@@ -25159,7 +25148,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  font-family: courier;\n  background: #F7CAC9;\n  overflow-x: hidden;\n  position: relative;\n  margin: 0;\n}\n#content {\n  column-gap: 5px;\n  -webkit-column-gap: 5px;\n  -moz-column-gap: 5px;\n  width: 100%;\n  text-align: center;\n}\n#content .squares {\n  position: relative;\n  z-index: 1;\n}\n#content canvas {\n  position: absolute;\n  z-index: 0;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n/*#content {\n    -webkit-column-count: 4;\n    -moz-column-count: 4;\n    column-count: 4;\n}\n\n@media screen and (max-width:1200px){\n    #content {\n\t-webkit-column-count: 3;\n\t-moz-column-count: 3;\n\tcolumn-count: 3;\n    }\n}\n\n@media screen and (max-width:991px){\n    #content {\n\t-webkit-column-count: 2;\n\t-moz-column-count: 2;\n\tcolumn-count: 2;\n    }\n}   \n\n@media screen and (max-width:767px){\n    #content {\n\t-webkit-column-count: 2;\n\t-moz-column-count: 2;\n\tcolumn-count: 2;\n    }\n}\n\n@media screen and (max-width:480px){\n    #content {\n\t-webkit-column-count: 1;\n\t-moz-column-count: 1;\n\tcolumn-count: 1;\n    }\n}\n*/\n.square {\n  opacity: 0;\n  width: 24%;\n  margin: 4px;\n  visibility: hidden;\n  /*margin: 0 0 5px;\n    width:300px;\n    display:inline-block;*/\n  background-image: linear-gradient(to right, #92A8D1, #F7CAC9);\n  border-radius: 2px;\n  overflow: hidden;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);\n}\n@media screen and (max-width: 991px) {\n  .square {\n    width: 32%;\n  }\n}\n@media screen and (max-width: 767px) {\n  .square {\n    width: 48%;\n  }\n}\n@media screen and (max-width: 480px) {\n  .square {\n    width: 99%;\n  }\n}\n.square h2 {\n  font-size: 13px;\n  margin: 4px 0;\n  font-weight: 100;\n  color: #555;\n}\n.square img {\n  width: 100%;\n}\n.square a {\n  text-decoration: none;\n  color: #555;\n}\n.square .pipe {\n  text-decoration: underline;\n  display: block;\n  margin: 10px;\n}\n.square .text {\n  padding: 0 10px 10px;\n  font-size: 11px;\n}\n", ""]);
+	exports.push([module.id, "body {\n  font-family: helvetica;\n  background: #333;\n  overflow-x: hidden;\n  position: relative;\n  margin: 0;\n}\n#content {\n  column-gap: 5px;\n  -webkit-column-gap: 5px;\n  -moz-column-gap: 5px;\n  width: 100%;\n  text-align: center;\n}\n#content .squares {\n  position: relative;\n  z-index: 1;\n}\n#content canvas {\n  position: absolute;\n  z-index: 0;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n/*#content {\n    -webkit-column-count: 4;\n    -moz-column-count: 4;\n    column-count: 4;\n}\n\n@media screen and (max-width:1200px){\n    #content {\n\t-webkit-column-count: 3;\n\t-moz-column-count: 3;\n\tcolumn-count: 3;\n    }\n}\n\n@media screen and (max-width:991px){\n    #content {\n\t-webkit-column-count: 2;\n\t-moz-column-count: 2;\n\tcolumn-count: 2;\n    }\n}   \n\n@media screen and (max-width:767px){\n    #content {\n\t-webkit-column-count: 2;\n\t-moz-column-count: 2;\n\tcolumn-count: 2;\n    }\n}\n\n@media screen and (max-width:480px){\n    #content {\n\t-webkit-column-count: 1;\n\t-moz-column-count: 1;\n\tcolumn-count: 1;\n    }\n}\n*/\n.square {\n  opacity: 0;\n  width: 32%;\n  margin: 4px;\n  visibility: hidden;\n  /*margin: 0 0 5px;\n    width:300px;\n    display:inline-block;*/\n  background: #fc0;\n  border-radius: 2px;\n  overflow: hidden;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);\n}\n@media screen and (max-width: 991px) {\n  .square {\n    width: 48%;\n  }\n}\n@media screen and (max-width: 767px) {\n  .square {\n    width: 99%;\n  }\n}\n@media screen and (max-width: 480px) {\n  .square {\n    width: 99%;\n  }\n}\n.square h2 {\n  font-size: 13px;\n  margin: 4px 0;\n  font-weight: 100;\n  color: #555;\n}\n.square img {\n  width: 100%;\n}\n.square a {\n  text-decoration: none;\n  color: #555;\n}\n.square .pipe {\n  text-decoration: underline;\n  display: block;\n  margin: 10px;\n}\n.square .text {\n  padding: 0 10px 10px;\n  font-size: 11px;\n}\n", ""]);
 
 	// exports
 
