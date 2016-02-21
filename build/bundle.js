@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5d68c2a668930b60358a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "504f9d8fa1c41b85d3db"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -597,7 +597,6 @@
 					},
 					componentWillMount: function componentWillMount() {
 									var that = this;
-									var toset = {};
 									console.log('list', list);
 
 									_.each(list, function (u) {
@@ -608,22 +607,23 @@
 																					if (days <= 5) {
 																									return true;
 																					}
-																	}).sort(function (a, b) {
-																					return new Date(b.publishedDate) - new Date(a.publishedDate);
 																	});
 
 																	console.log(items);
-
+																	var clist = that.state.list || [];
 																	_.each(items, function (e, i) {
 																					if (e) {
 																									console.log(u, i);
-																									toset[u + '_' + i] = _react2.default.createElement(Square, { href: e.link, name: e.title, text: e.title, more: e,
-																													getimgsrc: function getimgsrc(x) {
-																																	return $($('<div>' + x.content + '</div>').find('img')).attr('src') || console.warn('no image', x);
-																													}, key: u + '_' + i });
-																									that.setState(toset);
+																									clist.push({ date: e.publishedDate, square: _react2.default.createElement(Square, { href: e.link, name: e.title, text: e.title, more: e,
+																																	getimgsrc: function getimgsrc(x) {
+																																					return $($('<div>' + x.content + '</div>').find('img')).attr('src') || console.warn('no image', x);
+																																	}, key: u + '_' + i }) });
 																					}
 																	});
+																	clist = clist.sort(function (a, b) {
+																					return new Date(b.date) - new Date(a.date);
+																	});
+																	that.setState({ list: clist });
 													});
 									});
 					},
@@ -637,22 +637,25 @@
 					},
 					render: function render() {
 									var that = this;
-									if (Object.keys(this.state).length === 0) {
-													return null;
-									}
-
-									var squares = [];
-									_.each(that.state, function (v, u) {
-													squares = _.union(squares, [v]);
-									});
 
 									return _react2.default.createElement(
 													'div',
-													{ className: 'squares' },
+													null,
 													_react2.default.createElement(
-																	Masonry,
-																	{ className: 'my-gallery-class', elementType: 'div', options: masonryOptions, disableImagesLoaded: false },
-																	squares
+																	'h1',
+																	null,
+																	'The Internet for Filmmakers'
+													),
+													_react2.default.createElement(
+																	'div',
+																	{ className: 'squares' },
+																	_react2.default.createElement(
+																					Masonry,
+																					{ className: 'my-gallery-class', elementType: 'div', options: masonryOptions, disableImagesLoaded: false },
+																					_.map(this.state.list, function (x) {
+																									return x.square;
+																					})
+																	)
 													)
 									);
 					}
@@ -672,6 +675,11 @@
 									var src = this.props.getimgsrc && this.props.getimgsrc(this.props.more);
 									return src;
 					},
+					clicklink: function clicklink(u) {
+									return function () {
+													ga('send', 'event', 'click-square', u, u);
+									};
+					},
 					render: function render() {
 									var src = this.getImgSrcFromContent();
 									if (!src) {
@@ -683,7 +691,7 @@
 													{ className: 'square' },
 													_react2.default.createElement(
 																	'a',
-																	{ href: this.props.href, target: '_blank' },
+																	{ href: this.props.href, target: '_blank', onClick: this.clicklink(this.props.href) },
 																	_react2.default.createElement('img', { src: src }),
 																	_react2.default.createElement(
 																					'div',
@@ -25145,10 +25153,10 @@
 
 	exports = module.exports = __webpack_require__(212)();
 	// imports
-
+	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  font-family: helvetica;\n  background: #333;\n  overflow-x: hidden;\n  position: relative;\n  margin: 0;\n}\n#content {\n  column-gap: 5px;\n  -webkit-column-gap: 5px;\n  -moz-column-gap: 5px;\n  width: 100%;\n  text-align: center;\n}\n#content .squares {\n  position: relative;\n  z-index: 1;\n}\n#content canvas {\n  position: absolute;\n  z-index: 0;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n/*#content {\n    -webkit-column-count: 4;\n    -moz-column-count: 4;\n    column-count: 4;\n}\n\n@media screen and (max-width:1200px){\n    #content {\n\t-webkit-column-count: 3;\n\t-moz-column-count: 3;\n\tcolumn-count: 3;\n    }\n}\n\n@media screen and (max-width:991px){\n    #content {\n\t-webkit-column-count: 2;\n\t-moz-column-count: 2;\n\tcolumn-count: 2;\n    }\n}   \n\n@media screen and (max-width:767px){\n    #content {\n\t-webkit-column-count: 2;\n\t-moz-column-count: 2;\n\tcolumn-count: 2;\n    }\n}\n\n@media screen and (max-width:480px){\n    #content {\n\t-webkit-column-count: 1;\n\t-moz-column-count: 1;\n\tcolumn-count: 1;\n    }\n}\n*/\n.square {\n  opacity: 0;\n  width: 32%;\n  margin: 4px;\n  visibility: hidden;\n  /*margin: 0 0 5px;\n    width:300px;\n    display:inline-block;*/\n  background: #fc0;\n  border-radius: 2px;\n  overflow: hidden;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);\n}\n@media screen and (max-width: 991px) {\n  .square {\n    width: 48%;\n  }\n}\n@media screen and (max-width: 767px) {\n  .square {\n    width: 99%;\n  }\n}\n@media screen and (max-width: 480px) {\n  .square {\n    width: 99%;\n  }\n}\n.square h2 {\n  font-size: 13px;\n  margin: 4px 0;\n  font-weight: 100;\n  color: #555;\n}\n.square img {\n  width: 100%;\n}\n.square a {\n  text-decoration: none;\n  color: #555;\n}\n.square .pipe {\n  text-decoration: underline;\n  display: block;\n  margin: 10px;\n}\n.square .text {\n  padding: 0 10px 10px;\n  font-size: 11px;\n}\n", ""]);
+	exports.push([module.id, "body {\n  font-family: Montserrat;\n  background: #333;\n  overflow-x: hidden;\n  position: relative;\n  margin: 0;\n  color: #eee;\n}\nh1 {\n  font-size: 70px;\n  padding: 130px;\n}\n@media screen and (max-width: 991px) {\n  h1 {\n    font-size: 60px;\n    padding: 90px;\n  }\n}\n@media screen and (max-width: 767px) {\n  h1 {\n    font-size: 40px;\n    padding: 70px;\n  }\n}\n@media screen and (max-width: 480px) {\n  h1 {\n    font-size: 30px;\n    padding: 30px;\n  }\n}\n#content {\n  column-gap: 5px;\n  -webkit-column-gap: 5px;\n  -moz-column-gap: 5px;\n  width: 100%;\n  text-align: center;\n}\n#content .squares {\n  position: relative;\n  z-index: 1;\n}\n#content canvas {\n  position: absolute;\n  z-index: 0;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n/*#content {\n    -webkit-column-count: 4;\n    -moz-column-count: 4;\n    column-count: 4;\n}\n\n@media screen and (max-width:1200px){\n    #content {\n\t-webkit-column-count: 3;\n\t-moz-column-count: 3;\n\tcolumn-count: 3;\n    }\n}\n\n@media screen and (max-width:991px){\n    #content {\n\t-webkit-column-count: 2;\n\t-moz-column-count: 2;\n\tcolumn-count: 2;\n    }\n}   \n\n@media screen and (max-width:767px){\n    #content {\n\t-webkit-column-count: 2;\n\t-moz-column-count: 2;\n\tcolumn-count: 2;\n    }\n}\n\n@media screen and (max-width:480px){\n    #content {\n\t-webkit-column-count: 1;\n\t-moz-column-count: 1;\n\tcolumn-count: 1;\n    }\n}\n*/\n.square {\n  opacity: 0;\n  visibility: hidden;\n  width: 32%;\n  margin: 6px;\n  background: white;\n  overflow: hidden;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);\n}\n@media screen and (max-width: 991px) {\n  .square {\n    width: 48%;\n  }\n}\n@media screen and (max-width: 767px) {\n  .square {\n    width: 99%;\n  }\n}\n@media screen and (max-width: 480px) {\n  .square {\n    width: 99%;\n  }\n}\n.square h2 {\n  font-size: 13px;\n  margin: 4px 0;\n  font-weight: 100;\n  color: #555;\n}\n.square img {\n  width: 100%;\n}\n.square a {\n  text-decoration: none;\n  color: #555;\n}\n.square .pipe {\n  text-decoration: underline;\n  display: block;\n  margin: 10px;\n}\n.square .text {\n  padding: 0 10px 10px;\n  font-size: 11px;\n}\n", ""]);
 
 	// exports
 

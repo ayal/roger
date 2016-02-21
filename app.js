@@ -30,9 +30,8 @@ const App = React.createClass({
     },
     componentWillMount: function() {
 	var that = this;
-	var toset = {};
 	console.log('list', list)
-	
+
 	_.each(list, function(u){
 	    $.getJSON('https://ajax.googleapis.com/ajax/services/feed/load?num=100&v=1.0&q=' + encodeURIComponent(u) + '&callback=?', function(x) {
 		var toset = {};
@@ -41,20 +40,22 @@ const App = React.createClass({
 		    if (days <= 5) {
 			return true;
 		    }
-		}).sort((a,b)=>(new Date(b.publishedDate) - new Date(a.publishedDate)));
+		});
 		
 		console.log(items);
-		
+		var clist = that.state.list || [];
 		_.each(items, function(e,i){
 		    if (e) {
 			console.log(u,i)
-			toset[u + '_' + i] = <Square href={e.link} name={e.title} text={e.title} more={e}
+			clist.push({date: e.publishedDate, square: <Square href={e.link} name={e.title} text={e.title} more={e}
 			getimgsrc={(x) => { return $($('<div>' + x.content + '</div>').find('img')).attr('src') ||
-					    console.warn('no image', x)}} key={u + '_' + i} />
-			    that.setState(toset);
+					    console.warn('no image', x)}} key={u + '_' + i} />});
+
 			
 		    }
 		});
+		clist = clist.sort((a,b)=>(new Date(b.date) - new Date(a.date)));
+		that.setState({list: clist});
 		
 	    });
 	});
@@ -71,21 +72,17 @@ const App = React.createClass({
     },
     render: function() {
 	var that = this;
-	if (Object.keys(this.state).length === 0) {
-	    return null;
-	}
-
-	var squares = [];
-	_.each(that.state, function(v, u){
-	    squares = _.union(squares, [v])
-	});
 
         return (
+		<div>
+		<h1>The Internet for Filmmakers</h1>
+		
 		<div className="squares">
 		<Masonry className={'my-gallery-class'} elementType={'div'} options={masonryOptions} disableImagesLoaded={false}>
-		{squares}
+		{_.map(this.state.list, x=>x.square)}
    	    </Masonry>
-	    </div>
+		</div>
+		</div>
         );
     }
 });
@@ -104,6 +101,11 @@ const Square = React.createClass({
 	var src = this.props.getimgsrc && this.props.getimgsrc(this.props.more);
 	return src;
     },
+    clicklink: function(u) {
+	return () => {
+	    ga('send', 'event', 'click-square', u, u);
+	}
+    },
     render: function() {
 	var src = this.getImgSrcFromContent();
 	if (!src) {
@@ -112,7 +114,7 @@ const Square = React.createClass({
 	
 	return (
 		<div className="square">
-		<a href={this.props.href} target="_blank">
+		<a href={this.props.href} target="_blank" onClick={this.clicklink(this.props.href)} >
 		<img src={src} />
 		<div className="text">
 		<h2>{this.props.name}</h2>
