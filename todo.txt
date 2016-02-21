@@ -1,0 +1,21 @@
+/*
+
+- uninstall url
+- sync css / html 
+- analytics (also in webstore)
+- mailing list
+- pink icon
+- screeshots and texts
+- pitchfork tracks / albums
+- tweet / pin
+- make sure only updated posts?
+- make it not random but by the hour (so tiles will be the same for a while)
+
+== how to pack ==
+change version in manifest
+copy peachy to somewhere
+put pem in peachy dir call it key.pem
+delete .git and node_modules
+zip it like so: zip -r peachy.zip peachy/
+
+*/

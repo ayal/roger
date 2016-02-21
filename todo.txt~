@@ -1,0 +1,17 @@
+/*
+
+- uninstall url
+- sync css / html 
+- analytics
+- mailing list
+- 
+
+
+== how to pack ==
+change version in manifest
+copy peachy to somewhere
+put pem in peachy dir call it key.pem
+delete .git and node_modules
+zip it like so: zip -r peachy.zip peachy/
+
+*/

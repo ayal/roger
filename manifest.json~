@@ -1,0 +1,20 @@
+{
+    "manifest_version": 2,
+    "name": "Peachy",
+    "description": "The ultimate curation of art and other links",
+    "version": "1.0.1.6",
+    "chrome_url_overrides" : {
+	"newtab": "index.html"
+    },
+    "icons": { "16": "icon.png",
+               "48": "icon.png",
+               "128": "icon.png" },
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_title": "Google Mail"
+    },
+    "background": {
+	"scripts": ["jquery.js", "background.js"]
+    },
+    "content_security_policy": "script-src 'self' https://ajax.googleapis.com https://www.googleapis.com https://itunes.apple.com; object-src 'self'"
+}

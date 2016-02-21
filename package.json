@@ -1,0 +1,30 @@
+{
+  "name": "Peachy",
+  "version": "0.0.1",
+  "description": "Sweet Things",
+  "main": "app.js",
+  "author": "ayal",
+  "dependencies": {
+    "pg": "^4.4.3",
+    "lodash": "latest"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.16",
+    "babel-loader": "^6.0.1",
+    "babel-preset-es2015": "^6.0.15",
+    "babel-preset-react": "^6.0.15",
+    "css-loader": "^0.21.0",
+    "history": "^1.13.0",
+    "jsx-loader": "^0.13.2",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.1",
+    "lodash": "^3.10.1",
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2",
+    "react-masonry-component": "^2.0.0",
+    "react-router": "^1.0.0-rc4",
+    "style-loader": "^0.13.0",
+    "trianglify": "^0.4.0",
+    "webpack": "^1.12.2"
+  }
+}
