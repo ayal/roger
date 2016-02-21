@@ -76,7 +76,7 @@ const App = React.createClass({
         return (
 		<div>
 		<h1>The Internet for Filmmakers</h1>
-		
+		<img className="logo" src="logo48.png" />
 		<div className="squares">
 		<Masonry className={'my-gallery-class'} elementType={'div'} options={masonryOptions} disableImagesLoaded={false}>
 		{_.map(this.state.list, x=>x.square)}
