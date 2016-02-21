@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1511aeb0d4ad9371c032"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0ff80ca242970b16d6ca"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -692,7 +692,7 @@
 													{ className: 'square' },
 													_react2.default.createElement(
 																	'a',
-																	{ href: this.props.href, target: '_blank', onClick: this.clicklink(this.props.href) },
+																	{ className: 'square-link', href: this.props.href, target: '_blank', onClick: this.clicklink(this.props.href) },
 																	_react2.default.createElement('img', { src: src }),
 																	_react2.default.createElement(
 																					'div',
@@ -25157,7 +25157,7 @@
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  font-family: Montserrat;\n  background: #333;\n  overflow-x: hidden;\n  position: relative;\n  margin: 0;\n  color: #eee;\n}\nh1 {\n  font-size: 70px;\n  padding: 90px;\n}\n@media screen and (max-width: 991px) {\n  h1 {\n    font-size: 60px;\n    padding: 70px;\n  }\n}\n@media screen and (max-width: 767px) {\n  h1 {\n    font-size: 40px;\n    padding: 50px;\n  }\n}\n@media screen and (max-width: 480px) {\n  h1 {\n    font-size: 30px;\n    padding: 30px;\n  }\n}\n.logo {\n  margin: 40px;\n}\n#content {\n  column-gap: 5px;\n  -webkit-column-gap: 5px;\n  -moz-column-gap: 5px;\n  width: 100%;\n  text-align: center;\n}\n#content .squares {\n  position: relative;\n  z-index: 1;\n}\n#content canvas {\n  position: absolute;\n  z-index: 0;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n/*#content {\n    -webkit-column-count: 4;\n    -moz-column-count: 4;\n    column-count: 4;\n}\n\n@media screen and (max-width:1200px){\n    #content {\n\t-webkit-column-count: 3;\n\t-moz-column-count: 3;\n\tcolumn-count: 3;\n    }\n}\n\n@media screen and (max-width:991px){\n    #content {\n\t-webkit-column-count: 2;\n\t-moz-column-count: 2;\n\tcolumn-count: 2;\n    }\n}   \n\n@media screen and (max-width:767px){\n    #content {\n\t-webkit-column-count: 2;\n\t-moz-column-count: 2;\n\tcolumn-count: 2;\n    }\n}\n\n@media screen and (max-width:480px){\n    #content {\n\t-webkit-column-count: 1;\n\t-moz-column-count: 1;\n\tcolumn-count: 1;\n    }\n}\n*/\n.square {\n  opacity: 0;\n  visibility: hidden;\n  width: 32%;\n  margin: 6px;\n  background: white;\n  overflow: hidden;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);\n}\n@media screen and (max-width: 991px) {\n  .square {\n    width: 48%;\n  }\n}\n@media screen and (max-width: 767px) {\n  .square {\n    width: 99%;\n  }\n}\n@media screen and (max-width: 480px) {\n  .square {\n    width: 99%;\n  }\n}\n.square h2 {\n  font-size: 13px;\n  margin: 4px 0;\n  font-weight: 100;\n  color: #555;\n}\n.square img {\n  width: 100%;\n}\n.square a {\n  text-decoration: none;\n  color: #555;\n}\n.square .pipe {\n  text-decoration: underline;\n  display: block;\n  margin: 10px;\n}\n.square .text {\n  padding: 0 10px 10px;\n  font-size: 11px;\n}\n", ""]);
+	exports.push([module.id, "body {\n  font-family: Montserrat;\n  background: #333;\n  overflow-x: hidden;\n  position: relative;\n  margin: 0;\n  color: #eee;\n}\nh1 {\n  font-size: 70px;\n  padding: 90px;\n}\n@media screen and (max-width: 991px) {\n  h1 {\n    font-size: 60px;\n    padding: 70px;\n  }\n}\n@media screen and (max-width: 767px) {\n  h1 {\n    font-size: 40px;\n    padding: 50px;\n  }\n}\n@media screen and (max-width: 480px) {\n  h1 {\n    font-size: 30px;\n    padding: 30px;\n  }\n}\n.logo {\n  margin: 40px;\n}\n#content {\n  column-gap: 5px;\n  -webkit-column-gap: 5px;\n  -moz-column-gap: 5px;\n  width: 100%;\n  text-align: center;\n}\n#content .squares {\n  position: relative;\n  z-index: 1;\n}\n#content canvas {\n  position: absolute;\n  z-index: 0;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n.square {\n  opacity: 0;\n  visibility: hidden;\n  height: 0;\n  width: 32%;\n  margin: 6px;\n  background: white;\n  overflow: hidden;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);\n}\n@media screen and (max-width: 991px) {\n  .square {\n    width: 48%;\n  }\n}\n@media screen and (max-width: 767px) {\n  .square {\n    width: 99%;\n  }\n}\n@media screen and (max-width: 480px) {\n  .square {\n    width: 99%;\n  }\n}\n.square h2 {\n  font-size: 13px;\n  margin: 4px 0;\n  font-weight: 100;\n  color: #555;\n}\n.square img {\n  width: 100%;\n}\n.square a {\n  text-decoration: none;\n  color: #555;\n}\n.square .pipe {\n  text-decoration: underline;\n  display: block;\n  margin: 10px;\n}\n.square .text {\n  padding: 0 10px 10px;\n  font-size: 11px;\n}\n", ""]);
 
 	// exports
 
@@ -45238,15 +45238,16 @@
 	                this.refs[refName],
 	                function(instance) {
 			    this.showSquares(instance);
-	                    this.masonry.layout();
 			    cb && cb();
 	                }.bind(this)
 	            );
 	        },
 		showSquares: function(inst) {
+		    console.log('showing', inst);
 		    inst.images.forEach(function(i){
-			$(i.img).parents('.square').css({visibility:'visible'}).animate({opacity:1},1000)
+			$(i.img).parents('.square').css({visibility:'visible', height:'auto'}).animate({opacity:1},1000);
 		    });
+		    this.masonry.layout();
 		},
 	        componentDidMount: function() {
 	            this.initializeMasonry();
@@ -45281,6 +45282,7 @@
 	}
 
 	module.exports = MasonryComponent;
+
 
 
 /***/ },
@@ -48302,14 +48304,13 @@
 	      if ( !nodeType || !( nodeType === 1 || nodeType === 9 || nodeType === 11 ) ) {
 	        continue;
 	      }
-	      var childElems = elem.querySelectorAll('img');
+		var childElems = elem.querySelectorAll('img');
 	      // concat childElems to filterFound array
 	      for ( var j=0, jLen = childElems.length; j < jLen; j++ ) {
 	        var img = childElems[j];
 	        this.addImage( img );
 	      }
 	    }
-	//      console.log('images:', this.images);
 	  };
 
 	  /**
@@ -48368,8 +48369,8 @@
 	    this.isComplete = true;
 	    var _this = this;
 	    // HACK - another setTimeout so that confirm happens after progress
-	    setTimeout( function() {
-	      _this.emit( eventName, _this );
+	      setTimeout( function() {
+		_this.emit( eventName, _this );
 	      _this.emit( 'always', _this );
 	      if ( _this.jqDeferred ) {
 	        var jqMethod = _this.hasAnyBroken ? 'reject' : 'resolve';
@@ -48399,7 +48400,7 @@
 	  LoadingImage.prototype.check = function() {
 	    // first check cached any previous images that have same src
 	    var resource = cache[ this.img.src ] || new Resource( this.img.src );
-	    if ( resource.isConfirmed ) {
+	      if ( resource.isConfirmed ) {
 	      this.confirm( resource.isLoaded, 'cached was confirmed' );
 	      return;
 	    }
@@ -48442,7 +48443,7 @@
 
 	  Resource.prototype = new EventEmitter();
 
-	  Resource.prototype.check = function() {
+	    Resource.prototype.check = function() {
 	    // only trigger checking once
 	    if ( this.isChecked ) {
 	      return;

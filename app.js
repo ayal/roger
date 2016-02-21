@@ -114,7 +114,7 @@ const Square = React.createClass({
 	
 	return (
 		<div className="square">
-		<a href={this.props.href} target="_blank" onClick={this.clicklink(this.props.href)} >
+		<a className="square-link" href={this.props.href} target="_blank" onClick={this.clicklink(this.props.href)} >
 		<img src={src} />
 		<div className="text">
 		<h2>{this.props.name}</h2>
