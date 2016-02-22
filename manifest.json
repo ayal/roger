@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "Frame Roger",
-    "description": "The ultimate curation of film related stuff",
-    "version": "1.0.1.7",
+    "name": "Frame Roger - Internet for Filmmakers",
+    "description": "Curated links for the avid filmmaker :)",
+    "version": "1.0.1.8",
     "chrome_url_overrides" : {
 	"newtab": "index.html"
     },

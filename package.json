@@ -5,8 +5,9 @@
   "main": "app.js",
   "author": "ayal",
   "dependencies": {
+    "lodash": "latest",
     "pg": "^4.4.3",
-    "lodash": "latest"
+    "url-loader": "^0.5.7"
   },
   "devDependencies": {
     "babel-core": "^6.0.16",
