@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "99a2afd5a7c815db86fe"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "77b6315762b83a87e963"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -593,6 +593,22 @@
 
 	var rquote = _.sample(quotes);
 
+	var getimages = function getimages(str) {
+					var urls = [];
+					var rex = /<img[^>]+src="(.*?)"/gim;
+					var m = null;
+					while (m = rex.exec(str)) {
+									if (m[1].indexOf('twitt.gif') !== -1) {
+													continue;
+									}
+									urls.push(m[1]);
+					}
+					if (urls.length === 0) {
+									urls.push(null);
+					}
+					return urls;
+	};
+
 	var App = _react2.default.createClass({
 					displayName: 'App',
 
@@ -603,7 +619,14 @@
 					componentWillMount: function componentWillMount() {
 									var that = this;
 
+									var clist = that.state.list || [];
+									window.allproms = [];
 									_.each(list, function (u) {
+													var okokok = null;
+													var p = new Promise(function (r) {
+																	okokok = r;
+													});
+													allproms.push(p);
 													$.getJSON('https://ajax.googleapis.com/ajax/services/feed/load?num=100&v=1.0&q=' + encodeURIComponent(u) + '&callback=?', function (x) {
 																	var toset = {};
 																	var items = _.filter(x.responseData.feed.entries, function (x) {
@@ -611,24 +634,28 @@
 																					if (days <= 5) {
 																									return true;
 																					} else {
-																									console.log('old post', u);
+																									//			console.log('old post', u);
 																					}
 																	});
 
-																	var clist = that.state.list || [];
 																	_.each(items, function (e, i) {
-																					var src = $($('<div>' + e.content + '</div>').find('img')).attr('src') || e.mediaGroups && e.mediaGroups[0] && e.mediaGroups[0].contents && e.mediaGroups[0].contents[0] && e.mediaGroups[0].contents[0].thumbnails && e.mediaGroups[0].contents[0].thumbnails[0].url;
+																					var src = e && e.mediaGroups && e.mediaGroups[0] && e.mediaGroups[0].contents && e.mediaGroups[0].contents[0] && e.mediaGroups[0].contents[0].thumbnails && e.mediaGroups[0].contents[0].thumbnails[0].url || getimages(e.content)[0];
+
 																					if (e && src) {
 																									clist.push({ date: e.publishedDate, square: _react2.default.createElement(Square, { src: src, href: e.link, name: e.title, text: e.title, more: e, key: u + '_' + i }) });
 																					} else {
-																									!src && console.log('no src', e.content, e.mediaGroups[0].contents[0].thumbnails[0].url);
+																									!src && console.log('no src', e);
 																					}
 																	});
-																	clist = clist.sort(function (a, b) {
-																					return new Date(b.date) - new Date(a.date);
-																	});
-																	that.setState({ list: clist });
+																	okokok();
 													});
+									});
+
+									Promise.all(allproms).then(function () {
+													clist = clist.sort(function (a, b) {
+																	return new Date(b.date) - new Date(a.date);
+													});
+													that.setState({ list: clist });
 									});
 					},
 					nav: function nav(k, v) {},
@@ -721,9 +748,9 @@
 									return function (e) {
 													e.preventDefault();
 													if (u.indexOf('?') !== -1) {
-																	u += '&_ref=frameroger.com';
+																	u += '&ref=frameroger.com';
 													} else {
-																	u += '?&_ref=frameroger.com';
+																	u += '?&ref=frameroger.com';
 													}
 													window.open(u + '');
 													ga('send', 'event', 'click-square', u, u);
@@ -25208,7 +25235,7 @@
 
 
 	// module
-	exports.push([module.id, "#content {\n  column-gap: 5px;\n  -webkit-column-gap: 5px;\n  -moz-column-gap: 5px;\n  width: 100%;\n  text-align: center;\n}\n#content .squares {\n  position: relative;\n  z-index: 1;\n}\n#content canvas {\n  position: absolute;\n  z-index: 0;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n@keyframes loading {\n  100% {\n    transform: rotateY(180deg) rotateZ(30deg) scale(0.7);\n  }\n}\n.header {\n  text-align: left;\n  margin-top: 20px;\n  font-size: 13px;\n  margin-bottom: 10px;\n}\n.header a {\n  text-decoration: none;\n  color: inherit;\n}\n.header span {\n  display: inline-block;\n  margin-left: 10px;\n}\n.header .text {\n  position: absolute;\n  top: 11px;\n  padding-bottom: 10px;\n}\n.header .logo {\n  margin: 4px;\n  width: 16px;\n  height: 16px;\n  border: 4px solid #b300ff;\n  background: white;\n}\n.header .logo.loading,\n.header .logo:hover {\n  animation: loading 1s infinite ease;\n  animation-direction: alternate;\n}\n.square {\n  /*    opacity:0;\n    visibility:hidden; \n    height:0;*/\n  width: 31%;\n  margin: 10px;\n  background: white;\n  overflow: hidden;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);\n}\n@media screen and (max-width: 991px) {\n  .square {\n    width: 46%;\n  }\n}\n@media screen and (max-width: 767px) {\n  .square {\n    width: 99%;\n  }\n}\n@media screen and (max-width: 480px) {\n  .square {\n    width: 99%;\n  }\n}\n.square .tweet {\n  display: none;\n  background: white;\n  background-image: url(" + __webpack_require__(213) + ");\n  background-size: 20px 20px;\n  width: 20px;\n  height: 20px;\n  position: absolute;\n  top: 5px;\n  left: 5px;\n}\n.square .tweet:hover {\n  opacity: 0.5;\n}\n.square:hover .tweet {\n  display: inline-block;\n}\n.square h2 {\n  font-size: 13px;\n  margin: 4px 0;\n  font-weight: 100;\n  color: #555;\n}\n.square img {\n  width: 100%;\n}\n.square a {\n  text-decoration: none;\n  color: #555;\n}\n.square .pipe {\n  text-decoration: underline;\n  display: block;\n  margin: 10px;\n}\n.square .text {\n  padding: 0 10px 10px;\n  font-size: 11px;\n}\n.quote {\n  text-align: center;\n  margin-top: 30px;\n  margin-bottom: 50px;\n}\n.quote .wrap {\n  display: inline-block;\n}\n.quote .wrap .text {\n  background: #50e3c2;\n  color: white;\n  padding: 6px;\n  padding-bottom: 3px;\n  font-size: 25px;\n}\n@media screen and (max-width: 991px) {\n  .quote .wrap .text {\n    font-size: 22px;\n  }\n}\n@media screen and (max-width: 767px) {\n  .quote .wrap .text {\n    font-size: 20px;\n  }\n}\n@media screen and (max-width: 767px) {\n  .quote .wrap .text {\n    font-size: 18px;\n  }\n}\n.quote .wrap .name {\n  margin-top: 6px;\n  color: #50e3c2;\n  text-align: right;\n}\n", ""]);
+	exports.push([module.id, "#content {\n  column-gap: 5px;\n  -webkit-column-gap: 5px;\n  -moz-column-gap: 5px;\n  width: 100%;\n  text-align: center;\n}\n#content .squares {\n  position: relative;\n  z-index: 1;\n}\n#content canvas {\n  position: absolute;\n  z-index: 0;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n@keyframes loading {\n  100% {\n    transform: rotateY(180deg) rotateZ(30deg) scale(0.7);\n  }\n}\n.header {\n  text-align: left;\n  margin-top: 20px;\n  font-size: 13px;\n  margin-bottom: 10px;\n}\n.header a {\n  text-decoration: none;\n  color: inherit;\n}\n.header span {\n  display: inline-block;\n  margin-left: 10px;\n}\n.header .text {\n  position: absolute;\n  top: 11px;\n  padding-bottom: 10px;\n}\n.header .logo {\n  margin: 4px;\n  width: 16px;\n  height: 16px;\n  border: 4px solid #b300ff;\n  background: white;\n}\n.header .logo.loading,\n.header .logo:hover {\n  animation: loading 1s infinite ease;\n  animation-direction: alternate;\n}\n.square {\n  /*    opacity:0;\n    visibility:hidden; \n    height:0;*/\n  width: 31%;\n  margin: 10px;\n  background: white;\n  overflow: hidden;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);\n}\n@media screen and (max-width: 991px) {\n  .square {\n    width: 46%;\n  }\n}\n@media screen and (max-width: 767px) {\n  .square {\n    width: 99%;\n  }\n}\n@media screen and (max-width: 480px) {\n  .square {\n    width: 99%;\n  }\n}\n.square .tweet {\n  display: none;\n  background: white;\n  background-image: url(" + __webpack_require__(213) + ");\n  background-size: 20px 20px;\n  width: 20px;\n  height: 20px;\n  position: absolute;\n  top: 5px;\n  left: 5px;\n  opacity: 0.8;\n}\n.square .tweet:hover {\n  opacity: 1;\n}\n.square:hover .tweet {\n  display: inline-block;\n}\n.square h2 {\n  font-size: 13px;\n  margin: 10px 0px;\n  font-weight: 100;\n  color: #555;\n  line-height: 21px;\n}\n.square img {\n  width: 100%;\n}\n.square a {\n  text-decoration: none;\n  color: #555;\n}\n.square .pipe {\n  text-decoration: underline;\n  display: block;\n  margin: 10px;\n}\n.square .text {\n  padding: 0 10px 10px;\n  font-size: 11px;\n}\n.quote {\n  text-align: center;\n  margin-top: 30px;\n  margin-bottom: 50px;\n}\n.quote .wrap {\n  display: inline-block;\n}\n.quote .wrap .text {\n  background: #50e3c2;\n  color: white;\n  padding: 6px;\n  padding-bottom: 3px;\n  font-size: 25px;\n}\n@media screen and (max-width: 991px) {\n  .quote .wrap .text {\n    font-size: 22px;\n  }\n}\n@media screen and (max-width: 767px) {\n  .quote .wrap .text {\n    font-size: 20px;\n  }\n}\n@media screen and (max-width: 767px) {\n  .quote .wrap .text {\n    font-size: 18px;\n  }\n}\n.quote .wrap .name {\n  margin-top: 6px;\n  color: #50e3c2;\n  text-align: right;\n}\n", ""]);
 
 	// exports
 
@@ -45304,23 +45331,26 @@
 	            if (this.props.disableImagesLoaded) return;
 		    
 		    var that = this;
-		    _.each(this.props.children, function(x){
-			$('<img />').load(function(){
-			    if (!that.state.loaded[x.props.src]) {
+
+		    if (that.props.children.length === Object.keys(that.state.loaded).length) {
+
+			return;
+		    }
+		    
+		    for (var i = 0; i < that.props.children.length; i++) {
+			var x = that.props.children[i];
+			if (that.state.loaded[x.props.src]) {
+
+			}
+			else {
+			    $('<img />').load(function() {
 				that.state.loaded[x.props.src] = 1;
 				that.bounceupdate(that);
-			    }
-			}).attr('src', x.props.src)
-		    });
-
-		    
-	/*            imagesloaded(
-	                'bigwrap',
-	                function(instance) {
-			    this.showSquares(instance);
-			    cb && cb();
-	                }.bind(this)
-	            );*/
+				that.imagesLoaded();
+			    }).attr('src', x.props.src);
+			    break;
+			}
+		    }
 	        },
 	        componentDidMount: function() {
 	            this.initializeMasonry();
@@ -45353,6 +45383,7 @@
 			    return x;
 			}
 		    });
+
 		    
 	            return React.createElement(this.props.elementType, {
 	                className: this.props.className,

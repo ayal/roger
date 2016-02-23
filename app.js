@@ -137,6 +137,22 @@ var quotes = [
 var rquote = _.sample(quotes);
 
 
+var getimages = function(str) {
+    var urls = [];
+    var rex = /<img[^>]+src="(.*?)"/gim;
+    var m = null;
+    while ( m = rex.exec( str ) ) {
+	if (m[1].indexOf('twitt.gif') !== -1) {
+	    continue;
+	}
+	urls.push( m[1] );
+    }
+    if (urls.length === 0) {
+	urls.push(null);
+    }
+    return urls;
+}
+
 
 const App = React.createClass({
     mixins: [ Lifecycle, History ],
@@ -145,8 +161,15 @@ const App = React.createClass({
     },
     componentWillMount: function() {
 	var that = this;
-
+	
+	var clist = that.state.list || [];
+	window.allproms = [];
 	_.each(list, function(u){
+	    var okokok = null;
+	    var p = new Promise(function(r){
+		okokok = r;
+	    })
+	    allproms.push(p)
 	    $.getJSON('https://ajax.googleapis.com/ajax/services/feed/load?num=100&v=1.0&q=' + encodeURIComponent(u) + '&callback=?', function(x) {
 		var toset = {};
 		var items = _.filter(x.responseData.feed.entries, function(x){
@@ -155,28 +178,36 @@ const App = React.createClass({
 			return true;
 		    }
 		    else {
-			console.log('old post', u);
+//			console.log('old post', u);
 		    }
 		});
 		
-		var clist = that.state.list || [];
+
 		_.each(items, function(e,i){
-		    var src = $($('<div>' + e.content + '</div>').find('img')).attr('src') || (
-			e.mediaGroups && e.mediaGroups[0] && e.mediaGroups[0].contents && e.mediaGroups[0].contents[0] && 
+		    var src = (
+			e && e.mediaGroups && e.mediaGroups[0] && e.mediaGroups[0].contents && e.mediaGroups[0].contents[0] && 
 			    e.mediaGroups[0].contents[0].thumbnails && e.mediaGroups[0].contents[0].thumbnails[0].url
-		    );
+		    ) || getimages(e.content)[0]
+		    
 		    if (e && src) {
 			clist.push({date: e.publishedDate, square: <Square src={src} href={e.link} name={e.title} text={e.title} more={e} key={u + '_' + i} />});
 		    }
 		    else {
-			!src && console.log('no src', e.content, e.mediaGroups[0].contents[0].thumbnails[0].url)
+			!src && console.log('no src', e)
 		    }
 		});
-		clist = clist.sort((a,b)=>(new Date(b.date) - new Date(a.date)));
-		that.setState({list: clist});
+		okokok();
 		
 	    });
+	    	    
 	});
+
+	Promise.all(allproms).then(function(){
+	    clist = clist.sort((a,b)=>(new Date(b.date) - new Date(a.date)));
+	    that.setState({list: clist});
+	})
+	
+
     },
     nav: function(k,v) {
         
@@ -242,10 +273,10 @@ const Square = React.createClass({
 	return (e) => {
 	    e.preventDefault();
 	    if (u.indexOf('?') !== -1) {
-		u += '&_ref=frameroger.com';
+		u += '&ref=frameroger.com';
 	    }
 	    else {
-		u += '?&_ref=frameroger.com';
+		u += '?&ref=frameroger.com';
 	    }
 	    window.open(u + '');
 	    ga('send', 'event', 'click-square', u, u);
