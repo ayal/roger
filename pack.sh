@@ -1,3 +1,5 @@
+#! /usr/bin/env bash
+
 cd ~
 rm -rf pack-roger/
 cp -r roger pack-roger

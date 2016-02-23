@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Frame Roger - Internet for Filmmakers",
     "description": "Curated links for the avid filmmaker :)",
-    "version": "1.0.1.9",
+    "version": "1.0.2.0",
     "chrome_url_overrides" : {
 	"newtab": "index.html"
     },
