@@ -9,10 +9,36 @@ body {
 
     margin-right:200px;
     margin-left:200px;
-    
-    @media screen and (max-width:991px){
 
+}
+
+@media screen and (max-width:991px){
+    body {
+	margin-right:120px;
+	margin-left:120px;
     }
 }
+
+@media screen and (max-width:767px){
+    body {
+	margin-right:70px;
+	margin-left:70px;
+    }
+}
+
+@media screen and (max-width:480px){
+    body {
+	margin-right:30px;
+	margin-left:30px;
+    }
+}
+
+@media screen and (max-width:320px){
+    body {
+	margin-right:4px;
+	margin-left:4px;
+    }
+}
+
 
 
