@@ -224,6 +224,9 @@ const App = React.createClass({
 
 	var name = rquote.name;
 	var text = rquote.text;
+
+	var shareurl = 'http://www.frameroger.com';
+	
         return (
 		<div>
 
@@ -236,6 +239,19 @@ const App = React.createClass({
 		<div className="text">Internet for Filmmakers</div>
 		</span>
 		</a>
+		<div className="right">
+		<div className="w-widget w-widget-facebook mrk-share">
+		<iframe src={"https://www.facebook.com/plugins/like.php?href=" + encodeURIComponent(shareurl) + "&layout=button_count&locale=en_US&action=like&show_faces=false&share=true"} scrolling="no" frameBorder="0" allowTransparency="true" ></iframe>
+		    </div>
+		    <div className="w-widget w-widget-twitter mrk-share mrk-twitt">
+		<iframe src={"https://platform.twitter.com/widgets/tweet_button.html#url=" + encodeURIComponent(shareurl) + "&counturl=" + encodeURIComponent(shareurl) + "&text=" + encodeURIComponent("Internet for Filmmakers #frameroger") + "&count=none&size=m&dnt=true"} scrolling="no" frameBorder="0" allowTransparency="true"></iframe>
+		    </div>
+		    <div className="w-widget w-widget-gplus mrk-share">
+		      
+		<div className="g-plusone" data-href={shareurl} data-size="medium" data-annotation="bubble" data-width="120" data-recommendations="false" id="___plusone_0" ></div>
+		</div>
+
+		</div>
 		</div>
 
 		<div className="quote">

@@ -32,9 +32,37 @@
     margin-top:20px;
     font-size:13px;
     margin-bottom:10px;
+
+
+    .right {
+	position:absolute;
+	right:10px;
+	top:10px;
+	
+	@media screen and (max-width:991px){
+	    margin-top:20px;
+	    position:static;
+	}
+
+	.w-widget {
+	    display:inline-block;
+	    margin-right:6px;
+	}
+	.w-widget-facebook {
+	    border: none; overflow: hidden; width: 130px; height: 20px;
+	}
+	.w-widget-twitter {
+	    border: none; overflow: hidden; width: 62px; height: 21px;
+	}
+	.g-plusone {
+	    width: 70px!important; height: 20px; text-indent: 0px; margin: 0px; padding: 0px; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; background: transparent;
+	}
+    }
+    
     a {
 	text-decoration:none;
 	color:inherit;
+	
     }
     span {
 	display:inline-block;
@@ -44,9 +72,10 @@
     .text {
 	position:absolute;
 	top:11px;
-
 	padding-bottom:10px;
+	transition:color 1s ease;
 	&:hover {
+	    color:#b300ff;
 	}
     }
 
@@ -70,7 +99,7 @@
 /*    opacity:0;
     visibility:hidden; 
     height:0;*/
-    width: 31%;
+    width: 30%;
     margin:10px;
     background:white;
     overflow:hidden;    
